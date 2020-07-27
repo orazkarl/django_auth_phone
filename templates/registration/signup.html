@@ -1,0 +1,26 @@
+<div class="container">
+    {% if form.errors %}
+        <p>Ваше имя пользователя и пароль не совпадают. Пожалуйста, попробуйте еще раз.
+        </p>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p>Ваша учетная запись не имеет доступа к этой странице. Продолжать, пожалуйста, войдите в систему с учетной
+                записью, которая имеет доступ.</p>
+        {% else %}
+            <p>Please login to see this page.</p>
+        {% endif %}
+    {% endif %}
+
+    <form method="post" action=".">
+        {% csrf_token %}
+        {{ form }}
+
+        <input type="submit" value="login"/>
+        <input type="hidden" name="next" value="{{ next }}"/>
+    </form>
+
+    {# Assumes you setup the password_reset view in your URLconf #}
+    {#                <p><a href="{% url 'password_reset' %}">Lost password?</a></p>#}
+</div>
